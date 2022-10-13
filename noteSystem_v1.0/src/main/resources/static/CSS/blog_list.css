@@ -1,0 +1,42 @@
+/* 这个文件中专门写和博客列表页相关的样式 */
+.blog {
+    width: 100%;
+    padding: 20px;
+}
+.blog .title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 10px 0;
+}
+.blog .time {
+    text-align: center;
+    color: rgb(11, 189, 11);
+    padding: 10px 0;
+}
+.blog .desc {
+    text-indent: 2em;
+}
+.blog a{
+    /* a标签需要转成块级元素 */
+    display: block;
+    width: 140px;
+    height: 40px;
+    margin: 10px auto;
+    /* 加一个黑方框 */
+    border:2px black solid;
+ 
+
+    line-height: 40px;
+    text-align: center;
+    text-decoration: none;
+    
+
+}
+/* 使用伪类选择器 设计渐变色*/
+.blog a:hover{
+    /* 如果想让变化的柔和一些,可以加上过滤效果 */
+    transition: all 1s;
+    background: #333;
+    color: #fff;
+}

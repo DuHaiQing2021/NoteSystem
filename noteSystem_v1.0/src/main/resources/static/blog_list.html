@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>笔记列表</title>
+    <link rel="stylesheet" href="CSS/common.css">
+    <link rel="stylesheet" href="CSS/blog_list.css">
+</head>
+<body>
+    <!--导航栏-->
+    <div class="nav">
+        <img src="image/logo.jpg" alt="">
+        <span class="title">我的笔记系统</span>
+        <div class="void"></div>
+        <a href="blog_list.html">主页</a>
+        <a href="blog_edit.html">写笔记</a>
+        <a href="user/logout">注销</a>
+    </div>
+    <!-- 这里的.container作为页面的版心 -->
+    <div class="container">
+        <!-- 左侧个人信息 -->
+        <div class="left">
+           <div class="card">
+            <img src="image/logo.jpg" alt="">
+            <h2></h2>
+            <a href="#">github地址</a>
+            <div class="counter">
+                <span>文章</span>
+                <span>分类</span>
+            </div>
+            <div class="counter">
+                <span>2</span>
+                <span>1</span>
+            </div>
+           </div>
+        </div>
+        <!-- 右侧内容详情 -->
+        <div class="right">
+              <!-- 一个blog对应一个博客 -->
+              <div class="blog">
+                <div class="title">
+                    <!-- 博客题目 -->
+                </div>
+                <div class="time">
+                    <!-- 2022-09-10 22点19分 -->
+                </div>
+                <!-- 博客内容 -->
+                <div class="desc">
+                    <!-- Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores, rerum mollitia. Voluptate alias illo voluptatum aut quas in veniam vero, veritatis, distinctio, perspiciatis quo unde maiores iure asperiores? Voluptates, mollitia.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, optio beatae. Est optio necessitatibus nemo error corporis ea eaque quo iusto explicabo impedit natus ipsa iure aperiam, dolore incidunt doloribus.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit error quas, sed quae cum adipisci quidem voluptatibus explicabo vitae modi cupiditate porro incidunt temporibus dignissimos cumque aut alias sint optio?
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus perspiciatis, nobis voluptas in fugiat voluptates odio maiores totam delectus esse beatae dolorem! Inventore ipsam doloribus non facere quod esse debitis. -->
+
+                </div>
+                <div>
+                    <a href="blog_detail.html">查看全文 &gt; &gt;</a>
+                </div>
+              </div>
+               <!-- 一个blog对应一个博客 -->
+               <div class="blog">
+                <div class="title">
+                    <!-- 博客题目 -->
+                </div>
+                <div class="time">
+                    <!-- 2022-09-10 22点19分 -->
+                </div>
+                <!-- 博客内容 -->
+                <div class="desc">
+                    <!-- Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores, rerum mollitia. Voluptate alias illo voluptatum aut quas in veniam vero, veritatis, distinctio, perspiciatis quo unde maiores iure asperiores? Voluptates, mollitia.
+                    Lorem ipsum dolor sit consectetur adipisicing elit. Distinctio, optio beatae. Est optio necessitatibus nemo error corporis ea eaque quo iusto explicabo impedit natus ipsa iure aperiam, dolore incidunt doloribus.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit error quas, sed quae cum adipisci quidem voluptatibus explicabo vitae modi cupiditate porro incidunt temporibus dignissimos cumque aut alias sint optio?
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus perspiciatis, nobis voluptas in fugiat voluptates odio maiores totam delectus esse beatae dolorem! Inventore ipsam doloribus non facere quod esse debitis. -->
+
+                </div>
+                <div >
+                    <a></a>
+                </div>
+              </div>
+        </div>
+    </div>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        //在页面加载的时候，通过ajax给服务器发送数据，获取到博客列表信息，并显示在页面上
+        function getBlogList(){
+            jQuery.ajax({
+                type: "get",
+                url: "note/getallnotes",
+                success :function(body){
+                    //获取到的body就是一个js对象数组（也叫json格式数组），每个元素就是一个js对象，根据这个对象构造div
+                    //1.先把.right里的内容清空
+                    let rightDiv=document.querySelector('.right');
+                    rightDiv.innerHTML='';
+
+                    //2.遍历body，构造出一个个的blogDiv
+                    //因为要显示好几条内容所以需要不断的创建元素，并放在页面上，也就是dom树上
+                    for(let blog of body){
+                        let blogDiv = document.createElement('div');
+                        //这个对应上文中的类名
+                        blogDiv.className = 'blog';
+                        //构造标题
+                        let titleDiv = document.createElement('div');
+                        titleDiv.className ='title';
+                        titleDiv.innerHTML = blog.title;
+                        blogDiv.appendChild(titleDiv);
+                        //构造发布时间
+                        let dateDiv = document.createElement('div');
+                        dateDiv.className ='time';
+                        dateDiv.innerHTML= blog.postTime;
+                        blogDiv.appendChild(dateDiv);
+                        //构造博客的摘要
+                        let descDiv =document.createElement('div');
+                        descDiv.className ='desc';
+                        descDiv.innerHTML=blog.content;
+                        blogDiv.appendChild(descDiv);
+                        //构造 查看全文
+                        let a =document.createElement('a');
+                        a.innerHTML='查看全文 &gt;&gt;';
+                        //此处希望点击之后能够跳转到 博客详情页！！
+                        //这个跳转过程需要告知服务器需要访问的是那个博客详情页
+                        //在点击跳转后会将blog.blogId加入到tamcat中
+                        a.href='blog_detail.html?noteId='+blog.noteId;
+                        blogDiv.appendChild(a);
+
+                        //把blogDiv 挂到dom树上
+                        rightDiv.appendChild(blogDiv);
+                    }
+
+                },
+                error: function(){
+                    alert("获取博客列表失败！！");
+                }
+
+            })
+
+        };
+        //注意要调用这个函数
+        getBlogList();
+
+
+    //     //加上一个逻辑，通过GET/Login这个接口来获取当前的登陆状态
+    //     function getUserInfo(){
+    //         $.ajax({
+    //             type:'get',
+    //             url:'login',
+    //             success:function(body){
+    //                 //判断此处的body是不是一个有效的user对象（userId 是否为0）
+    //                 if(body.userId && body.userId > 0){
+    //                     //登录成功！
+    //                     //不做处理
+    //                     console.log("当前用户登录成功！用户名："+body.username);
+    //                 }else{
+    //                     //登录失败！
+    //                     //让前端页面，跳转到 login.html
+    //                     alert("当前您尚未登录！请登录后再访问博客页面！");
+    //                     location.assign('blog_login.html');
+    //                 }
+    //             },
+    //             error: function(){
+    //                 location.assign('blog_login.html');
+    //             }
+
+    //         })
+    //     }
+    //     getUserInfo();
+    // </script>
+    <!-- 在这里引入js文件 -->
+
+    <script>
+        // function getUserInfo(pathName){
+        //     $.ajax({
+        //         type:'get',
+        //         url:'login',
+        //         success: function(body){
+        //             //判断此处的body是不是一个有效的user对象（userId 是否为0）
+        //             if(body.userId && body.userId > 0){
+        //                 //登录成功！
+        //                 // console.log("当前用户登录成功！用户名："+body.username);
+        //                 if(pathName == "blog_list"){
+        //                     //在左边显示登录信息
+        //                     setCardName(body.username);
+        //                 }
+        //             }else{
+        //                 //登录失败！
+        //                 //让前端页面，跳转到 login.html
+        //                 alert("当前您尚未登录！请登录后再访问博客页面！");
+        //                 location.assign('blog_login.html');
+        //             }
+        //         },
+        //         error: function(){
+        //             location.assign('blog_login.html');
+        //         }
+
+        //     })
+        // }
+        getUserInfo("blog_list");
+    </script>
+</body>
+</html>

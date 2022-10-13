@@ -1,0 +1,7 @@
+# 设置运行环境
+spring:
+  profiles:
+    active: dev
+#配置 mybatis xml保存路径
+mybatis:
+  mapper-locations: classpath:mapper/**Mapper.xml

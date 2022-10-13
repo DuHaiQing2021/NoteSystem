@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登陆页面</title>
+    <link rel="stylesheet" href="CSS/common.css">
+    <link rel="stylesheet" href="CSS/blog_login.css">
+</head>
+<body>
+    <!--导航栏-->
+    <div class="nav">
+        <img src="image/logo.jpg" alt="">
+        <span class="title">我的个人笔记系统</span>
+        <div class="void"></div>
+        <a href="blog_list.html">主页</a>
+        <a href="blog_edit.html">写笔记</a>
+    </div>
+    <!-- 登录框 -->
+    <div class="login-container">
+            <div class="login-dialog">
+                <h3>登录</h3>
+                <div class="row">
+                    <span>用户名</span>
+                    <input type="text" id="username" name="username">
+                </div>
+                <div class="row">
+                    <span>密码</span>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="row">
+                    <input type="submit" class="submit" value="提交">
+                </div>
+            </div>
+    </div>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+        let submit=document.querySelector('.submit');
+        submit.onclick=function(){
+            //1.判空
+            let username = jQuery("#username");
+            let password = jQuery("#password");
+            if(jQuery.trim(username.val())==""){
+                alert("请先输入用户名！")
+                username.focus();//光标移到此处
+                return;
+            }
+            if(jQuery.trim(password.val())==""){
+                alert("请先输入密码！")
+                password.focus();
+                return;
+            }
+            jQuery.ajax({
+                type:'post',
+                url:'user/login',
+                data:{
+                    "username":username.val(),
+                    "password":password.val()
+                },
+                success : function(result){
+                    if(result.succ==200){
+                    
+                        alert(result.msg);
+                        location.assign('/blog_list.html');
+
+                    }else{
+                        alert(result.msg);
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+</html>

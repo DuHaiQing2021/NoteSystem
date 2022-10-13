@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 要设置是实现接口的具体包名加类名 -->
+<mapper namespace="com.example.demo.mapper.UserMapper">
+
+    <resultMap id="BaseMap" type="com.example.demo.model.User">
+        <id column="userId" property="userId"></id>
+        <result column="username" property="username"></result>
+        <result column="password" property="password"></result>
+        <result column="state" property="state"></result>
+    </resultMap>
+
+    <select id="selectByName" resultMap="BaseMap">
+        select * from user where username=#{username}
+    </select>
+
+    <select id="selectById" resultMap="BaseMap">
+        select * from user where userId=#{userId}
+    </select>
+
+
+</mapper>

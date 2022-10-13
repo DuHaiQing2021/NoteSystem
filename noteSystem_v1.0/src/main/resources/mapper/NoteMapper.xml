@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 要设置是实现接口的具体包名加类名 -->
+<mapper namespace="com.example.demo.mapper.NoteMapper">
+
+    <resultMap id="BaseMap" type="com.example.demo.model.Note">
+        <id column="noteId" property="noteId"></id>
+        <result column="title" property="title"></result>
+        <result column="content" property="content"></result>
+        <result column="userId" property="userId"></result>
+        <result column="postTime" property="postTime"></result>
+        <result column="rcount" property="rcount"></result>
+        <result column="state" property="state"></result>
+    </resultMap>
+
+    <insert id="insert">
+        insert into notes(title,content,userId,postTime) value(#{title},#{content},#{userId},now())
+    </insert>
+
+    <select id="selectAll" resultMap="BaseMap">
+        select * from notes order by postTime desc
+    </select>
+    <select id="selectId" resultMap="BaseMap">
+        select * from notes where noteId=#{noteId}
+    </select>
+
+    <delete id="delete">
+        delete from notes where noteId=#{noteId}
+    </delete>
+</mapper>

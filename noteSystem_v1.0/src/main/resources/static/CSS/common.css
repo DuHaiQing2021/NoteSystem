@@ -1,0 +1,128 @@
+/* 放置一些各个页面都会用到的公共样式 */
+*  {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* 给整个页面加上背景图 */
+html,body{
+    height: 100%;
+}
+body{
+    background-image: url(../image/back2.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size:cover; 
+}
+.nav {
+    width: 100%;
+
+    /* 一般来说这里的详细尺寸，都是设计稿中已经标记清楚的了，此处是随意设计的 */
+    height: 60px;
+   
+    background-color: rgba(51, 51,51, 0.4);
+    color: white;
+
+    /* 导航栏内部的内容，都是一行排列的，就需要使用flex布局来进行操作 */
+    display: flex;
+    /* 实现子元素垂直居中效果 */
+    align-items: center;
+
+
+}
+.nav img {
+
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    margin-left: 30px;
+    margin-right: 10px;
+
+}
+.nav .void {
+     /* 相对于父元素的宽度，如果父元素（.nav）宽度是 1000px，此时 .void就是700px */
+     width: 70%;
+
+}
+
+.nav a {
+    color: white;
+    /* 去掉下划线 */
+    text-decoration: none;
+
+    margin: 10px;
+}
+/* 接下来是版心相关的样式*/
+.container {
+    /* 当前版心并不是和窗口一样宽的 */
+    width: 1200px;
+    /* 减去导航栏的高度 */
+    height: calc(100% - 60px);
+    
+    /* 水平居中 */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+
+}
+.container .left{
+
+    height: 100%;
+    width: 20%;
+
+
+}
+.container .right{
+
+    height: 100%;
+    width: 79.3%;
+
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+
+    /* 当内容溢出时 添加滚动条 */
+    overflow: auto;
+}
+.card {
+
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    /* 这里通过内边距让图像和文字居中 */
+    /* 这里的得到的40px是用左边版心的宽度减去图片的宽度除以2 */
+    padding: 50px;
+
+}
+.card img {
+
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+
+}
+.card h2{
+    text-align: center;
+    padding: 5px;
+}
+
+.card a{
+    /* a标签默认是行内元素,行内元素的很多边距不生效,为了简单起见直接设为块级元素 */
+    display: block;
+    text-align: center;
+    /* 去掉下划线 */
+    text-decoration: none;
+   
+    color: #999;
+    padding: 5px;
+  
+}
+.card .counter{
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+
+}
+
+.blog .title{
+    text-align: center;
+}
